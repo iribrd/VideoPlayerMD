@@ -1,0 +1,101 @@
+﻿@model IEnumerable<videoSitecore2.Models.Videoview>
+@{
+    ViewData["Title"] = "Play";
+}
+
+
+    <a asp-action="Index"
+       class="btn btn-outline-danger btn-rounded btn-sm my-0 waves-effect">
+        بازگشت
+    </a>
+
+
+
+<div class="list-group-item list-group-item-action flex-column align-items-start">
+
+    <div class="d-flex w-100 justify-content-between">
+        <h4 class="mb-1">   @Model.First().Name</h4>
+    </div>
+
+    <small class="text-muted">
+        @Model.First().Description
+    </small>
+</div>
+
+
+
+
+<div style="height: 450px;">
+    <div id="defaultPlayer"></div>
+</div>
+<div id="timeline"></div>
+
+<script>
+
+
+    var zsmlistline = [
+         @foreach (var item in Model)
+         {
+
+             @:{ title: "@Html.Raw(item.Title)", type: 'cuepoint', metadataId: @item.metadataTitleId, color: '#3CF', pointNav: true },
+        }
+    ];
+
+    var location1 = "@Html.Raw((Model.First().Location).Replace("\\", "/"))";
+   // var zsmpath = "./Hoshno/" + location1;
+
+
+    var zsmpath2 = "http://172.16.0.182/vp/Hoshno/" + location1;
+   //   var zsmpath2 = "https://localhost/vp/Hoshno/" + location1;
+     //var zsmpath2 = url2+ "/Hoshno/" + location1;
+
+
+   //  var location2 = "@Html.Raw((Model.First().Location).Replace("\\", "\\\\"))";
+   //  var zsmpathtest = "C:\\Hoshno\\" + location2;
+
+
+
+
+    var url1 = "@Context.Request.Host@Context.Request.PathBase";
+    var id1 = "@Html.Raw(Model.First().Id)";
+
+    var zsmjsonfile = [
+         @foreach (var item in Model)
+         {
+           @:'https://' + url1 + '/Videos/startTimeEvent2/' + @item.Id + '?metadataTitleId='+ @item.metadataTitleId,
+
+        }
+    ];
+
+
+
+
+
+
+    $(function () {
+
+                $("#defaultPlayer").mediaPlayer({
+                autoplay: false,
+                 src: zsmpath2,
+                controlBar:
+                {
+                    sticky: true
+                },
+                plugins: {
+                    dataServices: zsmjsonfile,
+                    list: [
+                        {
+                            'className': 'fr.ina.amalia.player.plugins.TimelinePlugin',
+                            'container': '#timeline',
+                            'parameters': {
+                                listOfLines: zsmlistline
+                            }
+                        }
+                    ]
+                }
+
+            });
+
+    } );
+</script>
+

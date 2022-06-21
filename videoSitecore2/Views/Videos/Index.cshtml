@@ -1,0 +1,127 @@
+﻿@model PaginatedList<videoSitecore2.Models.Videoview>
+
+
+@{
+    ViewData["Title"] = "Index";
+    // IEnumerable<Videoview> firstBook = Model.ToList().GroupBy(d => d.Id);
+}
+
+
+<form class="form-inline mr-auto" asp-controller="Videos" asp-action="Index" method="get">
+    <div class="row">
+
+        <div class="form-group" style="outline-color: #dc3545; margin-bottom:15px;">
+            <div class="col">
+                <input class="form-control" style="outline-color: #dc3545; border-color: #dc3545;" value="@ViewData["SearchString"]" type="text" name="SearchString" placeholder="جستجو" aria-label="جستجو">
+            </div> <div class="col">
+
+                <select class="form-control" style="border-color: #dc3545; " id="metaDataType" name="metaDataType" asp-items="@ViewBag.ListofMetaDataType">
+                </select>
+            </div>
+            <div class="col">
+                <input class="btn btn-danger" type="submit" value="جستجو" />
+            </div>
+
+
+        </div>
+        </div>
+       
+
+
+
+</form>
+
+
+<div class="list-group">
+
+
+
+    @foreach (var item in Model)
+    {
+    <div class="list-group-item list-group-item-action flex-column align-items-start">
+
+        <div class="d-flex w-100 justify-content-between">
+            <h3 class="text-muted"> @Html.DisplayFor(model => item.Name)</h3>
+            <!--<h4 class="mb-1"> @Html.DisplayFor(model => item.Name)</h4>-->
+
+            <small> <a asp-action="player" asp-route-id="@item.Id"><img src="~/images/icon.png" alt="نمایش ویدئو"></a></small>
+        </div>
+
+        <small class="text-muted">
+            @Html.DisplayFor(model => item.Description)
+        </small>
+        <!--  <p class="mb-1"> @Html.DisplayFor(model => item.Title)</p> -->
+        <!-- <a asp-action="getMetaTypeforVideo" asp-route-id="@item.Id">عناوین</a> -->
+
+         <h5 class="text-muted"> @Html.DisplayFor(model => item.metaTypeName):</h5>
+
+
+
+    <p class="mb-1-@item.Id">
+        <!--<p  id="@item.Id" class="mb-1">-->
+
+        <script>
+
+             $(function () {
+              $.ajax({
+               url: '@Url.Action("getTitleList", "Videos")',
+               type: 'GET',
+               dataType: 'json',
+               data: { Id:  @item.Id },
+               cache: false,
+
+               success: function (TitleList) {
+                 //  alert( @item.Id);
+                   console.log(TitleList);
+
+                   for (var i = 0; i < TitleList.length; i++) {
+                       var title = TitleList[i].title;
+                    //   alert('title: ' + title);
+                     // $("<div></div>").html(title);
+                    //   $("p").html(title);
+                     //  $('.mb-1').append(title);
+                      // $('.mb-1-'+i).append(title + ', ');
+                      // $('.mb-1').html($('.mb-1').html() + '<br/>'+title);
+                      // $('.mb-1').html('<br/>' + title);
+                       $('.mb-1-@item.Id').append(title + ', ');
+
+                   }
+
+
+               }
+           });
+        });
+
+        </script>
+        </p>
+
+    </div>
+
+    }
+</div>
+
+
+@{
+    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+}
+
+<a asp-action="Index"
+   asp-route-pageNumber="@(Model.PageIndex - 1)"
+   asp-route-SearchString="@ViewData["SearchString"]"
+   asp-route-metaDataType="@ViewData["metaDataType"]"
+   class="btn btn-outline-danger btn-rounded btn-sm my-0 waves-effect @prevDisabled">
+    قبلی
+</a>
+
+
+<a asp-action="Index"
+   asp-route-pageNumber="@(Model.PageIndex + 1)"
+   asp-route-SearchString="@ViewData["SearchString"]"
+   asp-route-metaDataType="@ViewData["metaDataType"]"
+   class="btn btn-outline-danger btn-rounded btn-sm my-0 waves-effect  @nextDisabled">
+    بعدی
+</a>
+
+
+

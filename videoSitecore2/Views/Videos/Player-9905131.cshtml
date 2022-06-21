@@ -1,0 +1,196 @@
+﻿@model IEnumerable<videoSitecore2.Models.Videoview>
+@{
+    ViewData["Title"] = "Play";
+}
+
+<h1>Play</h1>
+
+
+<div>
+    <h4>Videos</h4>
+    <hr />
+    @foreach (var item in Model)
+    {
+
+
+<dl class="row">
+    <dt class="col-sm-2">
+        @Html.DisplayNameFor(model => item.Name)
+    </dt>
+    <dd class="col-sm-10">
+        @Html.DisplayFor(model => item.Name)
+    </dd>
+    <dt class="col-sm-2">
+        @Html.DisplayNameFor(model => item.Location)
+    </dt>
+    <dd class="col-sm-10">
+        @Html.DisplayFor(model => item.Location)
+    </dd>
+    <dt class="col-sm-2">
+        @Html.DisplayNameFor(model => item.Description)
+    </dt>
+    <dd class="col-sm-10">
+        @Html.DisplayFor(model => item.Description)
+    </dd>
+
+
+    <dt class="col-sm-2">
+        @Html.DisplayNameFor(model => item.Title)
+    </dt>
+    <dd class="col-sm-10">
+        @Html.DisplayFor(model => item.Title)
+    </dd>
+
+    <dt class="col-sm-2">
+        @Html.DisplayNameFor(model => item.metadataTitleId)
+    </dt>
+    <dd class="col-sm-10">
+        @Html.DisplayFor(model => item.metadataTitleId)
+    </dd>
+    
+
+</dl>
+    }
+</div>
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+
+
+
+
+<div>
+    <h4>Videos</h4>
+    <hr />
+
+
+    <dl class="row">
+        <dt class="col-sm-2">
+            name:
+        </dt>
+        <dd class="col-sm-10">
+            @Model.First().Name
+        </dd>
+
+        <dt class="col-sm-2">
+            location:
+        </dt>
+        <dd class="col-sm-10">
+            @Model.First().Location
+
+        </dd>
+
+
+        <dt class="col-sm-2">
+            discription:
+        </dt>
+        <dd class="col-sm-10">
+            @Model.First().Description
+        </dd>
+
+
+    </dl>
+</div>
+
+
+<script type="text/javascript">
+
+
+
+    var videos = [
+      @foreach (var item in Model)
+      {
+
+          @:{ id1: @item.Id ,title1:"@Html.Raw(item.Title)", metadatatitleId1:  @item.metadataTitleId },
+
+
+
+      }
+    ];
+
+
+    var zsmlistline = [
+         @foreach (var item in Model)
+         {
+
+             @:{ title: "@Html.Raw(item.Title)", type: 'cuepoint', metadataId: @item.metadataTitleId, color: '#3CF', pointNav: true },
+        }
+    ];
+
+
+
+
+          alert(' videos.length:' + videos.length);
+         /* for (var i = 0; i < videos.length; i++) {
+              var vid = videos[i];
+              alert(' id1:' + vid.id1);
+              alert(' title1:' + vid.title1);
+              alert(' metadatatitleId1:' + vid.metadatatitleId1);
+
+          }*/
+
+
+</script>
+
+
+
+
+<div style="height: 450px;">
+    <div id="defaultPlayer"></div>
+</div>
+<div id="timeline"></div>
+
+<script>
+
+ // var location1 = "@Html.Raw((Model.First().Location).Replace("\\", "/").Replace(".mp4", ""))";
+    var location1 = "@Html.Raw((Model.First().Location).Replace("\\", "/"))";
+    var path = "./Hoshno/" + location1;
+
+    var url1 = window.location.host;
+    var id1 = "@Html.Raw(Model.First().Id)";
+  //  var jsonfile = 'https://'+url1+'/Videos/startTimeEvent/' + id1;
+
+   
+   // var jsonfile2 = 'https://' + url1 + '/Videos/startTimeEvent2/' + id1 + '?metadataTitleId=32';
+
+    var zsmjsonfile = [
+         @foreach (var item in Model)
+         {
+           @:'https://' + url1 + '/Videos/startTimeEvent2/' + @item.Id + '?metadataTitleId='+ @item.metadataTitleId,
+
+        }
+    ];
+     
+
+
+  //  alert(jsonfile);
+    //alert("The URL of this page is: " + url1);
+    $(function () {
+
+                $("#defaultPlayer").mediaPlayer({
+                autoplay: false,
+                //  src: location1,
+                src: path,
+                controlBar:
+                {
+                    sticky: true
+                },
+                plugins: {
+                    dataServices: zsmjsonfile,
+                    list: [
+                        {
+                            'className': 'fr.ina.amalia.player.plugins.TimelinePlugin',
+                            'container': '#timeline',
+                            'parameters': {
+                                listOfLines: zsmlistline
+                            }
+                        }
+                    ]
+                }
+
+            });
+
+    } );
+</script>
+

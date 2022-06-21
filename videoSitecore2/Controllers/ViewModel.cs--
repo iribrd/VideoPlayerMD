@@ -1,0 +1,16 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using videoSitecore2.Models;
+
+namespace videoSitecore2.Controllers
+{
+    public class ViewModel
+    {
+       // public IEnumerable<MetaDataTitles> getMetaTypeTitle(int? id) { get; set; }
+       // public Task<PaginatedList<Videoview>> IndexAll(string searchString, int? pageNumber, int metaDataType) { get; set; }
+    }
+}
+
+

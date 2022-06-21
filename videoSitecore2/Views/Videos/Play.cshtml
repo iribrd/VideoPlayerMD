@@ -1,0 +1,47 @@
+﻿
+@model IEnumerable<videoSitecore2.Models.metaVsvideo>
+@{
+    ViewData["Title"] = "Play";
+}
+
+<h1>Play</h1>
+
+<div>
+    <h4>Videos</h4>
+    <hr />
+
+    @foreach (var item in Model)
+    {
+        <dl class="row">
+             <dt class="col-sm-2">
+                 @Html.DisplayNameFor(model => item.videos.Name)
+             </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => item.videos.Name)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => item.videos.Location)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => item.videos.Location)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => item.videos.Description)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => item.videos.Description)
+                </dd>
+
+
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => item.metadata.StartTime)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => item.metadata.StartTime)
+                </dd>
+            </dl>
+        }
+    </div>
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>

@@ -1,0 +1,50 @@
+﻿<!DOCTYPE html>
+<html lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - videoSitecore2</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+
+
+    <!--add by zsm-->
+     <script src="~/js/bower_components/jquery/dist/jquery.js"></script>
+    <script src="~/js/bower_components/jquery-ui/jquery-ui.min.js"></script>
+    <script src="~/js/bower_components/raphael/raphael.js"></script>
+    <link href="~/css/amalia.js.min.css" rel="stylesheet">
+    <script src="~/js/amalia.js.min.js"></script>
+    <script src="~/js/amalia.js-plugin-timeline.min.js"></script>
+
+
+</head>
+
+<!--<body style="background-image: url('/images/backgrand.png'); "> -->
+<body>
+        <header>
+            <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+                <div class="container">
+
+                    <img src="~/images/header.jpg" alt="header"  style="height: auto; width: inherit;" >
+                </div>
+            </nav>
+        </header>
+        <div class="container">
+            <main role="main" class="pb-3">
+                @RenderBody()
+            </main>
+        </div>
+
+
+        <footer class="border-top footer text-muted">
+            <div class="container">
+                &copy;2020 امور رسانه های نوین- اداره کل تحقیقات و جهاد خودکفایی صدا و سیما
+            </div>
+        </footer>
+        <!--remove by zsm   <script src="~/lib/jquery/dist/jquery.min.js"></script> -->
+        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="~/js/site.js" asp-append-version="true"></script>
+        @RenderSection("Scripts", required: false)
+
+    </body>
+</html>

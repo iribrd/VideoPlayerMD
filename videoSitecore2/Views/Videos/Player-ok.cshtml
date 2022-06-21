@@ -1,0 +1,120 @@
+﻿@model IEnumerable<videoSitecore2.Models.Videoview>
+@{
+    ViewData["Title"] = "Play";
+}
+
+<h1>Play</h1>
+
+<div>
+    <h4>Videos</h4>
+    <hr />
+
+
+    <dl class="row">
+        <dt class="col-sm-2">
+            name:
+        </dt>
+        <dd class="col-sm-10">
+            @Model.First().Name
+        </dd>
+
+        <dt class="col-sm-2">
+            location:
+        </dt>
+        <dd class="col-sm-10">
+            @Model.First().Location
+
+        </dd>
+
+
+        <dt class="col-sm-2">
+            discription:
+        </dt>
+        <dd class="col-sm-10">
+            @Model.First().Description
+        </dd>
+
+
+    </dl>
+</div>
+
+
+<script type="text/javascript">
+
+    //var students = "@Html.Raw(Model)";
+  //  var students = JSON.parse('@Html.Raw(Model.ToList())');
+
+   // var StartTime = '@Html.Raw(Model.First().StartTime)';
+    //alert('StartTime: ' + StartTime);
+
+
+   // var data = JSON.parse(students);
+  //  alert('data.length: ' + data.length);
+  //  for (var i = 0; i < data.length; i++) {
+    //    var student = data[i];
+
+
+
+   // var students = @Html.Raw(Json.Serialize(Model));
+  //  var students = JSON.parse('@Html.Raw(Json.Serialize(@Model))');
+  //  for (var i = 0; i < students.length; i++) {
+   //     var student = students[i];
+   //  alert('StartTime: ' + student.StartTime + ' Location:' + student.Location);
+
+  //  }
+
+
+
+</script>
+
+
+   
+
+<div style="height: 450px;">
+    <div id="defaultPlayer"></div>
+</div>
+<div id="timeline"></div>
+
+<script>
+
+    var location = "./Hoshno/" + "@Html.Raw((Model.First().Location).Replace("\\", "/"))";
+    var id1 = "@Html.Raw(Model.First().Id)"; 
+    var jsonfile = 'https://localhost:44380/Videos/startTimeEvent/' + id1;
+    alert(jsonfile);
+    $(function () {
+        $("#defaultPlayer").mediaPlayer({
+            autoplay: false,
+            src: location,
+            controlBar:
+            {
+                sticky: true
+            },
+            plugins: {
+                dataServices: [
+
+                    jsonfile
+                ],
+                list: [
+                    {
+                        'className': 'fr.ina.amalia.player.plugins.TimelinePlugin',
+                        'container': '#timeline',
+                        'parameters': {
+                            listOfLines: [
+                                {
+                                    title: 'Events 1',
+                                    type: 'cuepoint',
+                                    metadataId: 'events-amalia01',
+                                    color: '#3CF',
+                                    pointNav: true
+                                }
+
+
+                            ]
+                        }
+                    }
+                ]
+            }
+        });
+    });
+</script>
+

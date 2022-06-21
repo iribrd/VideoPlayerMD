@@ -1,0 +1,163 @@
+﻿@model IEnumerable<videoSitecore2.Models.Videoview>
+@{
+    ViewData["Title"] = "Play";
+}
+
+<h1>Play</h1>
+
+<div>
+    <h4>Videos</h4>
+    <hr />
+    @foreach (var item in Model)
+    {
+
+
+        <dl class="row">
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => item.Name)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => item.Name)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => item.Location)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => item.Location)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => item.Description)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => item.Description)
+            </dd>
+
+
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => item.StartTime)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => item.StartTime)
+            </dd>
+        </dl>
+    }
+</div>
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+
+
+
+<div style="height: 450px;">
+    <div id="defaultPlayer"></div>
+</div>
+<div id="timeline"></div>
+<script>
+
+    //  alert("Text: " + $("#test").text());
+
+    $(function () {
+        $("#defaultPlayer").mediaPlayer({
+            autoplay: false,
+            src: "amalia01.mp4",
+            controlBar:
+            {
+                sticky: true
+            },
+            plugins: {
+                dataServices: [
+                    'https://localhost:44380/Videos/Display/15',
+                    'amalia01-events2.json',
+                    'amalia01-events3.json'
+                ],
+                list: [
+                    {
+                        'className': 'fr.ina.amalia.player.plugins.TimelinePlugin',
+                        'container': '#timeline',
+                        'parameters': {
+                            listOfLines: [
+                                {
+                                    title: 'Events 1',
+                                    type: 'cuepoint',
+                                    metadataId: 'events-amalia01',
+                                    color: '#3CF',
+                                    pointNav: true
+                                },
+                                {
+                                    title: 'Events 2',
+                                    type: 'cuepoint',
+                                    metadataId: 'events-amalia02',
+                                    color: '#3CF',
+                                    pointNav: true
+                                },
+                                {
+                                    title: 'Events 3',
+                                    type: 'cuepoint',
+                                    metadataId: 'events-amalia03',
+                                    color: '#3CF',
+                                    pointNav: true
+                                }
+
+                            ]
+                        }
+                    }
+                ]
+            }
+        });
+    });
+</script>
+
+
+<!--<script>
+
+    $(function () {
+        $("#defaultPlayer").mediaPlayer({
+            autoplay: false,
+            src: "amalia01.mp4",
+            controlBar:
+            {
+                sticky: true
+            },
+            plugins: {
+                dataServices: [
+                    'amalia01-events1.json',
+                    'amalia01-events2.json',
+                    'amalia01-events3.json'
+                ],
+                list: [
+                    {
+                        'className': 'fr.ina.amalia.player.plugins.TimelinePlugin',
+                        'container': '#timeline',
+                        'parameters': {
+                            listOfLines: [
+                                {
+                                    title: 'Events 1',
+                                    type: 'cuepoint',
+                                    metadataId: 'events-amalia01',
+                                    color: '#3CF',
+                                    pointNav: true
+                                },
+                                {
+                                    title: 'Events 2',
+                                    type: 'cuepoint',
+                                    metadataId: 'events-amalia02',
+                                    color: '#3CF',
+                                    pointNav: true
+                                },
+                                {
+                                    title: 'Events 3',
+                                    type: 'cuepoint',
+                                    metadataId: 'events-amalia03',
+                                    color: '#3CF',
+                                    pointNav: true
+                                }
+
+                            ]
+                        }
+                    }
+                ]
+            }
+        });
+    });
+</script> -->

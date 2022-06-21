@@ -1,0 +1,145 @@
+﻿@model IEnumerable<videoSitecore2.Models.Videoview>
+@{
+    ViewData["Title"] = "Play";
+}
+
+<h1>نمایش ویدئو</h1>
+<hr />
+
+
+<!--<div>
+
+       @foreach (var item in Model)
+        {
+
+
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => item.Name)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => item.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => item.Location)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => item.Location)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => item.Description)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => item.Description)
+        </dd>
+
+
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => item.Title)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => item.Title)
+        </dd>
+
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => item.metadataTitleId)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => item.metadataTitleId)
+        </dd>
+
+
+    </dl>
+        }
+</div>-->
+
+
+<div>
+
+
+
+    <dl class="row">
+        <dt class="col-sm-2">
+            نام:
+        </dt>
+        <dd class="col-sm-10">
+            @Model.First().Name
+        </dd>
+
+        
+        <dt class="col-sm-2">
+            توضیحات:
+        </dt>
+        <dd class="col-sm-10">
+            @Model.First().Description
+        </dd>
+
+
+    </dl>
+</div>
+
+
+
+<div style="height: 450px;">
+    <div id="defaultPlayer"></div>
+</div>
+<div id="timeline"></div>
+
+<script>
+
+
+    var zsmlistline = [
+         @foreach (var item in Model)
+         {
+
+             @:{ title: "@Html.Raw(item.Title)", type: 'cuepoint', metadataId: @item.metadataTitleId, color: '#3CF', pointNav: true },
+        }
+    ];
+
+    var location1 = "@Html.Raw((Model.First().Location).Replace("\\", "/"))";
+    var zsmpath = "./Hoshno/" + location1;
+
+     //var location2 = "@Html.Raw((Model.First().Location).Replace("\\", "\\\\"))";
+    //var zsmpathtest = "C: \\Documents\\Users\\Administrator\\source\\Hoshno\\" + location2;
+   // alert(zsmpathtest);
+
+    var url1 = window.location.host;
+    var id1 = "@Html.Raw(Model.First().Id)";
+
+
+    var zsmjsonfile = [
+         @foreach (var item in Model)
+         {
+           @:'https://' + url1 + '/Videos/startTimeEvent2/' + @item.Id + '?metadataTitleId='+ @item.metadataTitleId,
+
+        }
+    ];
+
+
+    $(function () {
+
+                $("#defaultPlayer").mediaPlayer({
+                autoplay: false,
+                 src: zsmpath,
+                controlBar:
+                {
+                    sticky: true
+                },
+                plugins: {
+                    dataServices: zsmjsonfile,
+                    list: [
+                        {
+                            'className': 'fr.ina.amalia.player.plugins.TimelinePlugin',
+                            'container': '#timeline',
+                            'parameters': {
+                                listOfLines: zsmlistline
+                            }
+                        }
+                    ]
+                }
+
+            });
+
+    } );
+</script>
+

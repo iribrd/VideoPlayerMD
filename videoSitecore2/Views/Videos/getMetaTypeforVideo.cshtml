@@ -1,0 +1,25 @@
+﻿@model List<videoSitecore2.Models.MetaDataTitles>
+
+
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+
+<div class="list-group">
+
+    @foreach (var item in Model)
+    {
+    <div class="list-group-item list-group-item-action flex-column align-items-start">
+               
+        <p class="mb-1"> @Html.DisplayFor(model => item.Title)</p>
+
+               
+    </div>
+
+        }
+    </div>
+
+

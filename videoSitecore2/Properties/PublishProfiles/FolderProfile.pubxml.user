@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+https://go.microsoft.com/fwlink/?LinkID=208121. 
+-->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <_PublishTargetUrl>C:\Users\Administrator\source\repos\videoSitecore2\videoSitecore2\bin\Release\netcoreapp3.1\publish\</_PublishTargetUrl>
+    <TimeStampOfAssociatedLegacyPublishXmlFile />
+  </PropertyGroup>
+  <ItemGroup>
+    <DestinationConnectionStrings Include="VideoMDDatabase">
+      <Value>Server=172.17.176.211\RTCLOCAL%3bDatabase=VideoMD%3bUser ID=VideoTag%3b Password=Zaq1%3b</Value>
+    </DestinationConnectionStrings>
+  </ItemGroup>
+</Project>
